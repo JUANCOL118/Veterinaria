@@ -1,71 +1,37 @@
 package com.example.Veterinaria.Emtity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
+
+@Entity
+@Table
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+
 public class Historia_clinica {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nombre;
-    private String documento;
-    private String telefono;
-    private String correo;
 
-    public Historia_clinica() {
-    }
+    @NotBlank(message = "LA fecha de apertura es olbigatoria")
+    @Column(name="fecha de apertura", nullable = false)
+    private LocalDate Fecha_apertura;
 
-    public Historia_clinica(Long id, String nombre, String documento, String telefono, String correo) {
-        this.id = id;
-        this.nombre = nombre;
-        this.documento = documento;
-        this.telefono = telefono;
-        this.correo = correo;
-    }
+    @Column(columnDefinition = "TEXT")
+    private String antecedentes;
 
-    public Long getId() {
-        return id;
-    }
+    @Column(columnDefinition = "TEXT")
+    private String observaciones;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getDocumento() {
-        return documento;
-    }
-
-    public void setDocumento(String documento) {
-        this.documento = documento;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public String getCorreo() {
-        return correo;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
-
-    @Override
-    public String toString() {
-        return "Historia_clinica{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", documento='" + documento + '\'' +
-                ", telefono='" + telefono + '\'' +
-                ", correo='" + correo + '\'' +
-                '}';
-    }
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mascota_id", nullable = false, unique = true)
+    @JsonIgnoreProperties({"historiaClinica", "hibernateLazyInitializer", "handler"})
+    private Mascota mascota;
 }
