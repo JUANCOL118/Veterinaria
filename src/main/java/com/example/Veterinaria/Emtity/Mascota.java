@@ -51,7 +51,7 @@ public class Mascota {
     @JsonIgnoreProperties("mascota")
     private Historia_clinica historiaClinica;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "propietario_id", nullable = false)
     @JsonIgnoreProperties({"mascotas", "hibernateLazyInitializer", "handler"})
     private Propietario propietario;
