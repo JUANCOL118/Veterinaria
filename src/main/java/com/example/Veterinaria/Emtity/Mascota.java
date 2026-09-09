@@ -47,10 +47,6 @@ public class Mascota {
     @Column(nullable = false)
     private Double peso;
 
-    @OneToOne(mappedBy = "mascota", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("mascota")
-    private Historia_clinica historiaClinica;
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "propietario_id", nullable = false)
     @JsonIgnoreProperties({"mascotas", "hibernateLazyInitializer", "handler"})
